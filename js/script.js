@@ -49,10 +49,9 @@ function generateBackGrn(elements, arrayOfBackGrnds) {
     }
   });
 }
+let arrayOfFlipCards = [];
 
 container.addEventListener("click", flip);
-
-let arrayOfFlipCards = [];
 
 function flip(event) {
   let target = event.target;
@@ -63,7 +62,6 @@ function flip(event) {
     }
     target = target.parentNode;
   }
-  console.log(arrayOfFlipCards);
   if (arrayOfFlipCards.length === 2) {
     checkIfSamePicture(arrayOfFlipCards);
     arrayOfFlipCards = [];
@@ -79,22 +77,23 @@ function checkIfSamePicture(flippedCards) {
   const secondOpenedCard = 1;
   if (
     flippedCards[firstOpenedCard].lastChild.style.cssText ===
-    flippedCards[secondOpenedCard].lastChild.style.cssText
-  ) {
-    if (
-      flippedCards[firstOpenedCard].lastChild.dataset.numberOfElement !==
+      flippedCards[secondOpenedCard].lastChild.style.cssText &&
+    flippedCards[firstOpenedCard].lastChild.dataset.numberOfElement !==
       flippedCards[secondOpenedCard].lastChild.dataset.numberOfElement
-    ) {
-      setTimeout(()=>{doIfFindSame(flippedCards)},1000);
-    }
+  ) {
+    setTimeout(() => {
+      doIfFindSame(flippedCards);
+    }, 750);
   } else {
-    setTimeout(()=> {togleBoth(flippedCards)},1000);
+    setTimeout(() => {
+      togleBoth(flippedCards);
+    }, 750);
   }
 }
 
 function doIfFindSame(arrayOfCards) {
   arrayOfCards.forEach(el => el.remove());
 }
-function togleBoth(arr){
+function togleBoth(arr) {
   arr.forEach(el => toggleCard(el));
 }
