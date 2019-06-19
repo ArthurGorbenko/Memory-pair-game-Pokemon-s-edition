@@ -51,27 +51,39 @@ function generateBackGrn(elements, arrayOfBackGrnds) {
 }
 let arrayOfFlipCards = [];
 let boardLock = false;
+let countForMatches = 0;
+const firstOpenedCard = 0;
+const secondOpenedCard = 1;
 
 container.addEventListener("click", flip);
 
 function flip(event) {
-  if(boardLock){
-    return null;
-  }
   let target = event.target;
-  if(target.classList.contains('flipper flipped')){
+  if (boardLock) {
     return null;
   }
+
   while (target != container) {
+    if (
+      target.className === "flipper flipped" &&
+      arrayOfFlipCards.length === 1 &&
+      arrayOfFlipCards[firstOpenedCard].lastChild.dataset.numberOfElement ===
+        this.lastChild.dataset.numberOfElement
+    ) {
+      arrayOfFlipCards = [];
+      return null;
+    }
     toggleCard(target);
     if (target.className === "flipper flipped") {
       arrayOfFlipCards.push(target);
     }
     target = target.parentNode;
   }
+  console.log(arrayOfFlipCards);
+
   if (arrayOfFlipCards.length === 2) {
     boardLock = true;
-    checkIfSamePicture(arrayOfFlipCards);
+    checkIfSamePictures(arrayOfFlipCards);
     arrayOfFlipCards = [];
   }
 }
@@ -80,15 +92,19 @@ function toggleCard(element) {
   element.classList.toggle("flipped");
 }
 
-function checkIfSamePicture(flippedCards) {
-  const firstOpenedCard = 0;
-  const secondOpenedCard = 1;
+function checkIfSamePictures(flippedCards) {
   if (
     flippedCards[firstOpenedCard].lastChild.style.cssText ===
       flippedCards[secondOpenedCard].lastChild.style.cssText &&
     flippedCards[firstOpenedCard].lastChild.dataset.numberOfElement !==
       flippedCards[secondOpenedCard].lastChild.dataset.numberOfElement
   ) {
+    countForMatches += 2;
+    if (countForMatches === 16) {
+      setTimeout(() => {
+        reloadPageifWon();
+      }, 750);
+    }
     setTimeout(() => {
       doIfFindSame(flippedCards);
       boardLock = false;
@@ -106,4 +122,8 @@ function doIfFindSame(arrayOfCards) {
 }
 function togleBoth(arr) {
   arr.forEach(el => toggleCard(el));
+}
+function reloadPageifWon() {
+  alert("You won!");
+  document.location.reload(true);
 }
