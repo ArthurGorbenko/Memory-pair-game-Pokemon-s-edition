@@ -50,11 +50,18 @@ function generateBackGrn(elements, arrayOfBackGrnds) {
   });
 }
 let arrayOfFlipCards = [];
+let boardLock = false;
 
 container.addEventListener("click", flip);
 
 function flip(event) {
+  if(boardLock){
+    return null;
+  }
   let target = event.target;
+  if(target.classList.contains('flipper flipped')){
+    return null;
+  }
   while (target != container) {
     toggleCard(target);
     if (target.className === "flipper flipped") {
@@ -63,6 +70,7 @@ function flip(event) {
     target = target.parentNode;
   }
   if (arrayOfFlipCards.length === 2) {
+    boardLock = true;
     checkIfSamePicture(arrayOfFlipCards);
     arrayOfFlipCards = [];
   }
@@ -83,10 +91,12 @@ function checkIfSamePicture(flippedCards) {
   ) {
     setTimeout(() => {
       doIfFindSame(flippedCards);
+      boardLock = false;
     }, 750);
   } else {
     setTimeout(() => {
       togleBoth(flippedCards);
+      boardLock = false;
     }, 750);
   }
 }
