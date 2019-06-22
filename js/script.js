@@ -35,20 +35,20 @@ let backs = document.querySelectorAll(".back");
 
 generateBackGrn(backs, CLASSES_ADD_IMAGES);
 
-function generateBackGrn(elements, arrayOfBackGrnds) {
+function generateBackGrn(elements, arrrayOfClasses) {
   let arrayOfElements = Array.from(elements);
   arrayOfElements.sort(function() {
     return 0.5 - Math.random();
   });
   arrayOfElements.forEach((element, index) => {
-    if (index >= arrayOfBackGrnds.length) {
-      element.style.backgroundPosition =
-        arrayOfBackGrnds[index - arrayOfBackGrnds.length];
+    if (index >= arrrayOfClasses.length) {
+      element.classList.add(arrrayOfClasses[index - arrrayOfClasses.length]);
     } else {
-      element.style.backgroundPosition = arrayOfBackGrnds[index];
+      element.classList.add(arrrayOfClasses[index]);
     }
   });
-}
+};
+
 let arrayOfFlipCards = [];
 let boardLock = false;
 let countForMatches = 0;
