@@ -1,12 +1,12 @@
 const CLASSES_ADD_IMAGES = [
-  "20px 0px",
-  "20px -180px",
-  "20px -350px",
-  "20px -525px",
-  "-190px 0px",
-  "-390px 0px",
-  "-600px 0px",
-  "-810px 0px"
+  "slowbro",
+  "tangela",
+  "weeppinbell",
+  "snorlax",
+  "joltenon",
+  "pinsir",
+  "pidgeot",
+  "beedrill"
 ];
 
 let cards = document.getElementsByClassName("card");
@@ -47,18 +47,15 @@ function generateBackGrn(elements, arrrayOfClasses) {
       element.classList.add(arrrayOfClasses[index]);
     }
   });
-};
-
+}
 let arrayOfFlipCards = [];
 let boardLock = false;
 let countForMatches = 0;
 const FIRST_OPENED_CARD = 0;
 const SECOND_OPENED_CARD = 1;
+const CLASS_FOR_IMAGE = 1;
 
-CONTAINER.addEventListener("click", flip);
-
-function flip(event) {
-  let target = event.target;
+const flip = ({ target }) => {
   if (boardLock) {
     return null;
   }
@@ -82,10 +79,13 @@ function flip(event) {
 
   if (arrayOfFlipCards.length === 2) {
     boardLock = true;
+    console.log(arrayOfFlipCards);
     checkIfSamePictures(arrayOfFlipCards);
     arrayOfFlipCards = [];
   }
-}
+};
+
+CONTAINER.addEventListener("click", flip);
 
 function toggleCard(element) {
   element.classList.toggle("flipped");
@@ -93,8 +93,8 @@ function toggleCard(element) {
 
 function checkIfSamePictures(flippedCards) {
   if (
-    flippedCards[FIRST_OPENED_CARD].lastChild.style.cssText ===
-      flippedCards[SECOND_OPENED_CARD].lastChild.style.cssText &&
+    flippedCards[FIRST_OPENED_CARD].lastChild.classList[CLASS_FOR_IMAGE] ===
+      flippedCards[SECOND_OPENED_CARD].lastChild.classList[CLASS_FOR_IMAGE] &&
     flippedCards[FIRST_OPENED_CARD].lastChild.dataset.numberOfElement !==
       flippedCards[SECOND_OPENED_CARD].lastChild.dataset.numberOfElement
   ) {
