@@ -1,4 +1,4 @@
-const valuesOfBackPos = [
+const CLASSES_ADD_IMAGES = [
   "20px 0px",
   "20px -180px",
   "20px -350px",
@@ -10,7 +10,7 @@ const valuesOfBackPos = [
 ];
 
 let cards = document.getElementsByClassName("card");
-const container = document.querySelector(".container");
+const CONTAINER = document.querySelector(".container");
 
 for (let i = 0; i < cards.length; i++) {
   addElements(cards[i], i);
@@ -33,7 +33,7 @@ function addElements(element, i) {
 
 let backs = document.querySelectorAll(".back");
 
-generateBackGrn(backs, valuesOfBackPos);
+generateBackGrn(backs, CLASSES_ADD_IMAGES);
 
 function generateBackGrn(elements, arrayOfBackGrnds) {
   let arrayOfElements = Array.from(elements);
@@ -52,10 +52,10 @@ function generateBackGrn(elements, arrayOfBackGrnds) {
 let arrayOfFlipCards = [];
 let boardLock = false;
 let countForMatches = 0;
-const firstOpenedCard = 0;
-const secondOpenedCard = 1;
+const FIRST_OPENED_CARD = 0;
+const SECOND_OPENED_CARD = 1;
 
-container.addEventListener("click", flip);
+CONTAINER.addEventListener("click", flip);
 
 function flip(event) {
   let target = event.target;
@@ -63,11 +63,11 @@ function flip(event) {
     return null;
   }
 
-  while (target != container) {
+  while (target != CONTAINER) {
     if (
       target.className === "flipper flipped" &&
       arrayOfFlipCards.length === 1 &&
-      arrayOfFlipCards[firstOpenedCard].lastChild.dataset.numberOfElement ===
+      arrayOfFlipCards[FIRST_OPENED_CARD].lastChild.dataset.numberOfElement ===
         this.lastChild.dataset.numberOfElement
     ) {
       arrayOfFlipCards = [];
@@ -94,10 +94,10 @@ function toggleCard(element) {
 
 function checkIfSamePictures(flippedCards) {
   if (
-    flippedCards[firstOpenedCard].lastChild.style.cssText ===
-      flippedCards[secondOpenedCard].lastChild.style.cssText &&
-    flippedCards[firstOpenedCard].lastChild.dataset.numberOfElement !==
-      flippedCards[secondOpenedCard].lastChild.dataset.numberOfElement
+    flippedCards[FIRST_OPENED_CARD].lastChild.style.cssText ===
+      flippedCards[SECOND_OPENED_CARD].lastChild.style.cssText &&
+    flippedCards[FIRST_OPENED_CARD].lastChild.dataset.numberOfElement !==
+      flippedCards[SECOND_OPENED_CARD].lastChild.dataset.numberOfElement
   ) {
     countForMatches += 2;
     if (countForMatches === 16) {
